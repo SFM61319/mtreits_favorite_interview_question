@@ -1,5 +1,5 @@
-use std::fs::File;
-use std::io::{Read, Result};
+use std::fs::{File, OpenOptions};
+use std::io::{Read, Result, Write};
 
 use crate::constants::CHUNK_SIZE;
 
@@ -18,6 +18,16 @@ where
 
         f(&buffer);
     }
+
+    Ok(())
+}
+
+pub fn write_chunk(filename: &str, data: &[u8; CHUNK_SIZE]) -> Result<()> {
+    let _bytes = OpenOptions::new()
+        .create(true)
+        .append(true)
+        .open(filename)?
+        .write(data)?;
 
     Ok(())
 }
