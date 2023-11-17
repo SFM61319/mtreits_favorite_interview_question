@@ -13,11 +13,11 @@ pub fn find_common(bin1: &str, bin2: &str, bin_out: &str) {
     })
     .unwrap();
 
-    let nums1 = nums1;
     read_chunks(bin2, |chunk| {
         let num = u32::from_le_bytes(*chunk);
         if nums1[num as usize] {
-            write_chunk(bin_out, chunk).unwrap()
+            write_chunk(bin_out, chunk).unwrap();
+            nums1.set(num as usize, false)
         }
     })
     .unwrap();
